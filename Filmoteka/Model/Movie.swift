@@ -29,6 +29,6 @@ struct Movie: Identifiable, Codable {
 }
 struct constants {
     static let apiKey = "2911f8276e47b3f11fefc3ebd9203e2f"
-    static let baseUrl = "https://api.themoviedb.org/3"
+    static let baseURL = "https://api.themoviedb.org/3"
     
 }
