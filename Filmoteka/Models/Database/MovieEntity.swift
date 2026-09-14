@@ -9,19 +9,22 @@ import Foundation
 import SwiftData
 @Model
 class MovieEntity {
-    var id: Int
+    @Attribute(.unique) var id: Int
     var title: String
+    var overview: String
     var posterPath: String?
     
-    init(id: Int, title: String, posterPath: String? = nil) {
+    init(id: Int, title: String, overview: String, posterPath: String? = nil) {
         self.id = id
         self.title = title
+        self.overview = overview
         self.posterPath = posterPath
     }
     init(movie: Movie) {
-        id = movie.id
-        title = movie.title
-        posterPath = movie.posterPath
+        self.id = movie.id
+        self.title = movie.title
+        self.overview = movie.overview
+        self.posterPath = movie.posterPath
     }
     
 }

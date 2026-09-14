@@ -12,10 +12,10 @@ struct MovieResponse: Codable {
     let results: [Movie]
 }
 struct Movie: Identifiable, Codable {
-    var id: Int
-    var title: String
-    var overview: String
-    var posterPath: String?
+    let id: Int
+    let title: String
+    let overview: String
+    let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
         case id, title, overview
