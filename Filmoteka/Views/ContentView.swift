@@ -18,13 +18,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                TextField("Search film", text: $movieViewModel.searchText)
-                    .padding()
-                    .textFieldStyle(.roundedBorder)
-                    .onSubmit {
-                        movieViewModel.searchMovies()
-                    }
                 ScrollView {
+                    TextField("Search", text: $movieViewModel.searchText)
+                        .padding()
+                        .textFieldStyle(.roundedBorder)
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        .accentColor(Color.primary)
+                        .onSubmit {
+                            movieViewModel.searchMovies()
+                        }
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(movieViewModel.movies) { movie in
                             NavigationLink(destination: MovieDetailView(movie: movie)) {
@@ -43,8 +45,10 @@ struct ContentView: View {
                                         .font(.headline)
                                         .multilineTextAlignment(.center)
                                         .lineLimit(2)
+                                        .foregroundColor(.primary)
                                 }
                             }
+                            .buttonStyle(PlainButtonStyle())
                         }
                     }
                     .padding()
