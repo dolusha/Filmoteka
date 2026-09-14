@@ -11,7 +11,7 @@ class MovieAPIService {
     static let shared = MovieAPIService()
     
     func fetchMovies(query: String) async throws -> [Movie] {
-        guard let url = URL(string: "\(constants.baseURL)/search/movie?api_key=\(constants.apiKey)&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&language=ru-RU") else {
+        guard let url = URL(string: "\(Constants.baseURL)/search/movie?api_key=\(Constants.apiKey)&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&language=ru-RU") else {
             throw URLError(.badURL)
         }
         
@@ -20,7 +20,7 @@ class MovieAPIService {
         return decodedData.results
     }
     func fetchPopularMovies() async throws -> [Movie] {
-        guard let url = URL(string: "\(constants.baseURL)/movie/popular?api_key=\(constants.apiKey)&language=ru-RU") else {
+        guard let url = URL(string: "\(Constants.baseURL)/movie/popular?api_key=\(Constants.apiKey)&language=ru-RU") else {
             throw URLError(.badURL)
         }
         

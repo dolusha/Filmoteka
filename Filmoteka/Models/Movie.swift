@@ -22,12 +22,12 @@ struct Movie: Identifiable, Codable {
         case posterPath = "poster_path"
     }
     
-    var posterUrl: URL? {
+    var posterURL: URL? {
         guard let path = posterPath else { return nil }
-        return URL(string: "https://image.tmdb.org/t/w500\(path)")
+        return URL(string: "https://image.tmdb.org/t/p/w500\(path)")
     }
 }
-struct constants {
+struct Constants {
     static let apiKey = "2911f8276e47b3f11fefc3ebd9203e2f"
     static let baseURL = "https://api.themoviedb.org/3"
     

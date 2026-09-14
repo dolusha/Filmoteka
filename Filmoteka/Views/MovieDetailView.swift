@@ -12,19 +12,25 @@ struct MovieDetailView: View {
     let movie: Movie
     var body: some View {
         ScrollView {
-            VStack {
-                AsyncImage(url: movie.posterUrl) { image in
+            VStack(alignment: .leading) {
+                AsyncImage(url: movie.posterURL) { image in
                     image
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
                 } placeholder: {
                     Color.gray.opacity(0.2)
                 }
                 .cornerRadius(12)
                 .padding()
                 
+                Text(movie.title)
+                    .font(.title)
+                    .bold()
+                    .padding(.horizontal)
+                
                 Text(movie.overview)
                     .padding()
+                
                 Spacer()
             }
         }

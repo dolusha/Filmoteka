@@ -24,36 +24,38 @@ struct ContentView: View {
                     .onSubmit {
                         movieViewModel.searchMovies()
                     }
-            }
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(movieViewModel.movies) { movie in
-                        NavigationLink(destination: MovieDetailView(movie: movie)) {
-                            VStack {
-                                AsyncImage(url: movie.posterUrl) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                } placeholder: {
-                                    Color.gray.opacity(0.2)
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(movieViewModel.movies) { movie in
+                            NavigationLink(destination: MovieDetailView(movie: movie)) {
+                                VStack {
+                                    AsyncImage(url: movie.posterURL) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFit()
+                                    } placeholder: {
+                                        Color.gray.opacity(0.2)
+                                    }
+                                    .frame(height: 250)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    
+                                    Text(movie.title)
+                                        .font(.headline)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(2)
                                 }
-                                .frame(height: 250)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                Text(movie.title)
-                                    .font(.headline)
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(2)
                             }
                         }
                     }
+                    .padding()
                 }
             }
+            .navigationTitle("Movies")
+            .onAppear {
+                movieViewModel.loadPopularMovies()
+            }
         }
-        .navigationTitle("Movies")
-        .onAppear {
-            movieViewModel.loadPopularMovies()
-        }
+        
     }
 }
 
