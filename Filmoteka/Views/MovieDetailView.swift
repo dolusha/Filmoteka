@@ -39,17 +39,6 @@ struct MovieDetailView: View {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 #Preview {
     
 }

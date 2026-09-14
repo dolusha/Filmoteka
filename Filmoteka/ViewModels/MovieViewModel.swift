@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 @Observable
 class MovieViewModel {
+    static let shared = MovieViewModel()
     var movies: [Movie] = []
     var searchText: String = ""
     

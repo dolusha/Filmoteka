@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var movieViewModel = MovieViewModel()
+    @State private var movieViewModel = MovieViewModel.shared
     
     private let columns = [
         GridItem(.flexible()),
@@ -56,7 +56,10 @@ struct ContentView: View {
             }
             .navigationTitle("Movies")
             .onAppear {
-                movieViewModel.loadPopularMovies()
+                if movieViewModel.movies.isEmpty {
+                    movieViewModel.loadPopularMovies()
+                }
+                
             }
         }
         
