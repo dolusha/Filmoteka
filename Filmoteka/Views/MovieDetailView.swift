@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MovieDetailView: View {
+    @State private var isLiked: Bool = false
     let movie: Movie
     var body: some View {
         ScrollView {
@@ -23,10 +24,25 @@ struct MovieDetailView: View {
                 .cornerRadius(12)
                 .padding()
                 
-                Text(movie.title)
-                    .font(.title)
-                    .bold()
-                    .padding(.horizontal)
+                HStack {
+                    Text(movie.title)
+                        .font(.title)
+                        .bold()
+                        .padding(.horizontal)
+                    Spacer()
+                    Button() {
+                        isLiked.toggle()
+                    } label: {
+                        
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .font(.system(size: 24))
+                            .foregroundColor(isLiked ? .red : .gray)
+                            .frame(width: 20, height: 20)
+                            .padding()
+                            .glassEffect(.clear)
+                            .padding()
+                    }
+                }
                 
                 Text(movie.overview)
                     .padding()
