@@ -19,14 +19,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    TextField("Search", text: $movieViewModel.searchText)
-                        .padding()
-                        .textFieldStyle(.roundedBorder)
-                        .font(.system(size: 16, weight: .semibold, design: .rounded))
-                        .accentColor(Color.primary)
-                        .onSubmit {
-                            movieViewModel.searchMovies()
-                        }
+                    
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(movieViewModel.movies) { movie in
                             NavigationLink(destination: MovieDetailView(movie: movie)) {
@@ -52,6 +45,13 @@ struct ContentView: View {
                         }
                     }
                     .padding()
+                }
+                .searchable(
+                    text: $movieViewModel.searchText,
+                    placement: .navigationBarDrawer(displayMode: .automatic),
+                    prompt: "Search")
+                .onChange(of: movieViewModel.searchText) { oldValue, newValue in
+                    movieViewModel.searchMovies()
                 }
             }
             .navigationTitle("Movies")
