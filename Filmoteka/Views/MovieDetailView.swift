@@ -7,10 +7,13 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct MovieDetailView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var isLiked: Bool = false
     let movie: Movie
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -31,9 +34,8 @@ struct MovieDetailView: View {
                         .padding(.horizontal)
                     Spacer()
                     Button() {
-                        isLiked.toggle()
+                      toggleLike()
                     } label: {
-                        
                         Image(systemName: isLiked ? "heart.fill" : "heart")
                             .font(.system(size: 24))
                             .foregroundColor(isLiked ? .red : .gray)
@@ -49,9 +51,51 @@ struct MovieDetailView: View {
                 
                 Spacer()
             }
+            .onAppear {
+               checkIfLiked()
+            }
         }
         .navigationTitle("Description")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    // MARK: SwiftData logic
+    private func toggleLike() {
+        let movieId = movie.id
+        
+        let descriptor = FetchDescriptor<MovieEntity>(
+            predicate: #Predicate { $0.id == movieId }
+        )
+        
+        do {
+            let existingMovies = try modelContext.fetch(descriptor)
+            
+            if let movieToDelete = existingMovies.first {
+                modelContext.delete(movieToDelete)
+                isLiked = false
+            } else {
+                let newEntity = MovieEntity(movie: movie)
+                modelContext.insert(newEntity)
+                isLiked = true
+            }
+            
+            try modelContext.save()
+        } catch {
+            print(error)
+        }
+    }
+    private func checkIfLiked() {
+        let movieId = movie.id
+        
+        let descriptor = FetchDescriptor<MovieEntity>(
+            predicate: #Predicate { $0.id == movieId }
+        )
+        
+        do {
+            let existingMovies = try modelContext.fetch(descriptor)
+            isLiked = !existingMovies.isEmpty
+        } catch {
+            print(error)
+        }
     }
 }
 

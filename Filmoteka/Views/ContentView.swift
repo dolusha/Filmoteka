@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var movieViewModel = MovieViewModel.shared
     
     private let columns = [
@@ -19,7 +21,6 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 ScrollView {
-                    
                     LazyVGrid(columns: columns, spacing: 20) {
                         ForEach(movieViewModel.movies) { movie in
                             NavigationLink(destination: MovieDetailView(movie: movie)) {
