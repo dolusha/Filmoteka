@@ -1,5 +1,5 @@
 //
-//  FilmEntity.swift
+//  MovieEntity.swift
 //  Filmoteka
 //
 //  Created by mac on 14.09.2026.
@@ -26,5 +26,12 @@ class MovieEntity {
         self.overview = movie.overview
         self.posterPath = movie.posterPath
     }
-    
+    func toDomain() -> Movie {
+        return Movie(
+            id: self.id,
+            title: self.title,
+            overview: self.overview,
+            posterPath: self.posterPath
+        )
+    }
 }
