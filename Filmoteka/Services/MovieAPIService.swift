@@ -11,21 +11,22 @@ class MovieAPIService {
     static let shared = MovieAPIService()
     
     func fetchMovies(query: String) async throws -> [Movie] {
-        guard let url = URL(string: "\(Constants.baseURL)/search/movie?api_key=\(Constants.apiKey)&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&language=ru-RU") else {
-            throw URLError(.badURL)
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: "\(Constants.baseURL)/search/movie?api_key=\(Constants.apiKey)&query=\(encodedQuery)&language=ru-RU")
+        else {
+            throw NetworkError.invalidURL
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedData = try JSONDecoder().decode(MovieResponse.self, from: data)
+        let decodedData: MovieResponse = try await NetworkManager.fetch(url)
         return decodedData.results
     }
+    
     func fetchPopularMovies() async throws -> [Movie] {
         guard let url = URL(string: "\(Constants.baseURL)/movie/popular?api_key=\(Constants.apiKey)&language=ru-RU") else {
-            throw URLError(.badURL)
+            throw NetworkError.invalidURL
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decodedData = try JSONDecoder().decode(MovieResponse.self, from: data)
+        let decodedData: MovieResponse = try await NetworkManager.fetch(url)
         return decodedData.results
     }
 }
