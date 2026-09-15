@@ -1,5 +1,5 @@
 //
-//  MainTabBarVC.swift
+//  MainTabView.swift
 //  Filmoteka
 //
 //  Created by mac on 15.09.2026.
@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct MainTabBarVC: View {
+struct MainTabView: View {
     var body: some View {
         TabView {
-            ContentView()
+            HomeView()
                 .tabItem {
                     Label("Movies", systemImage: "popcorn")
                 }

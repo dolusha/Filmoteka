@@ -11,7 +11,7 @@ import SwiftData
 struct FilmotekaApp: App {
     var body: some Scene {
         WindowGroup {
-            MainTabBarVC()
+            MainTabView()
                 
         }
         .modelContainer(for: MovieEntity.self)
